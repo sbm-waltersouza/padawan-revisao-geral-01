@@ -1,0 +1,38 @@
+
+<div class="container">
+<!-- lista de videos exibição da lista com botão de editar -->
+<h2>Youtube do WaltherDev</h2>
+
+<!-- campo de busca -->
+<input type="search" [(ngModel)]="searchTerm" placeholder="Buscar vídeos..." (input)="searchVideos()" class="campoBusca">
+
+
+<ul class="video-list">
+  <li *ngFor="let video of videos" class="video-item">
+    <h3 class="video-title">{{ video.nome }}</h3>
+    <a [href]="video.link" target="_blank" class="video-link">{{ video.link }}</a>
+    <button (click)="openEditModal(video)" class="button-container">Editar</button>
+    <button (click)="aaddVideo()" class="button-container">Adicionar Vídeo</button>
+    <button (click)="deleteVideo(video)" class="button-container">Remover</button>
+
+  </li>
+</ul>
+
+<!-- Modal de Edição -->
+<div *ngIf="selectedVideo" class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h3>Editar Vídeo</h3>
+    <form (ngSubmit)="updateVideo()">
+      <label for="videoName">Nome do Vídeo</label>
+      <input type="text" id="videoName" [(ngModel)]="selectedVideo.nome" name="nome" required>
+
+      <label for="videoLink">Link do Vídeo</label>
+      <input type="text" id="videoLink" [(ngModel)]="selectedVideo.link" name="link" required>
+
+      <button type="submit">Salvar</button>
+      <button type="button" (click)="closeModal()">Cancelar</button>
+    </form>
+  </div>
+</div>
+
+</div>
